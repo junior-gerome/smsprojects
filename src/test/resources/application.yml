@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sms-platform-test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+app:
+  security:
+    jwt:
+      secret: test-secret-key-for-jwt-validation-1234567890
+      expiration: 3600000
+    cors:
+      allowed-origins: http://localhost:4200
+    rate-limit:
+      enabled: false
+  webhooks:
+    delivery-secret: test-webhook-secret
+  bootstrap:
+    admin:
+      enabled: false
+  scheduler:
+    campaign-dispatch-delay: 60000
+  sms:
+    provider-name: test-provider

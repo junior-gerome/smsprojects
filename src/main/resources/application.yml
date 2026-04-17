@@ -1,0 +1,85 @@
+spring:
+  messages:
+    basename: messages
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  bootstrap:
+    admin:
+      enabled: ${BOOTSTRAP_ADMIN_ENABLED:false}
+      email: ${BOOTSTRAP_ADMIN_EMAIL:}
+      password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      expiration: ${JWT_EXPIRATION:86400000}
+    cors:
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:*,http://127.0.0.1:*}
+    rate-limit:
+      enabled: ${RATE_LIMIT_ENABLED:true}
+      requests-per-minute: ${RATE_LIMIT_REQUESTS_PER_MINUTE:120}
+  webhooks:
+    delivery-secret: ${WEBHOOK_SECRET}
+  scheduler:
+    campaign-dispatch-delay: ${CAMPAIGN_DISPATCH_DELAY:60000}
+  sms:
+    default-provider: ${SMS_DEFAULT_PROVIDER:demo}
+    fallback-provider: ${SMS_FALLBACK_PROVIDER:demo}
+    default-sender-id: ${SMS_DEFAULT_SENDER_ID:SIGNALV}
+    routing:
+      country-code: ${SMS_COUNTRY_CODE:237}
+      operator-providers:
+        orange-cm: ${SMS_ROUTE_ORANGE_PROVIDER:orange-cm}
+        mtn-cm: ${SMS_ROUTE_MTN_PROVIDER:mtn-cm}
+        camtel: ${SMS_ROUTE_CAMTEL_PROVIDER:camtel}
+      operator-prefixes:
+        orange-cm: []
+        mtn-cm: []
+        camtel: []
+    providers:
+      demo:
+        enabled: true
+        mode: ${SMS_DEMO_MODE:demo}
+        sender-id: ${SMS_DEMO_SENDER_ID:SIGNALV}
+      orange-cm:
+        enabled: ${SMS_ORANGE_ENABLED:false}
+        mode: ${SMS_ORANGE_MODE:demo}
+        sender-id: ${SMS_ORANGE_SENDER_ID:}
+        sender-address: ${SMS_ORANGE_SENDER_ADDRESS:}
+        auth-url: ${SMS_ORANGE_AUTH_URL:}
+        send-url: ${SMS_ORANGE_SEND_URL:}
+        authorization-header: ${SMS_ORANGE_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_ORANGE_CLIENT_ID:}
+        client-secret: ${SMS_ORANGE_CLIENT_SECRET:}
+      mtn-cm:
+        enabled: ${SMS_MTN_ENABLED:false}
+        mode: ${SMS_MTN_MODE:demo}
+        sender-id: ${SMS_MTN_SENDER_ID:}
+        auth-url: ${SMS_MTN_AUTH_URL:}
+        send-url: ${SMS_MTN_SEND_URL:}
+        authorization-header: ${SMS_MTN_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_MTN_CLIENT_ID:}
+        client-secret: ${SMS_MTN_CLIENT_SECRET:}
+        api-key: ${SMS_MTN_API_KEY:}
+        product-key: ${SMS_MTN_PRODUCT_KEY:}
+      camtel:
+        enabled: ${SMS_CAMTEL_ENABLED:false}
+        mode: ${SMS_CAMTEL_MODE:demo}
+        sender-id: ${SMS_CAMTEL_SENDER_ID:}
+        auth-url: ${SMS_CAMTEL_AUTH_URL:}
+        send-url: ${SMS_CAMTEL_SEND_URL:}
+        authorization-header: ${SMS_CAMTEL_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_CAMTEL_CLIENT_ID:}
+        client-secret: ${SMS_CAMTEL_CLIENT_SECRET:}

@@ -1,0 +1,97 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/signal_velocity_sms?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-init-sql: SET SESSION default_storage_engine=INNODB
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+app:
+  bootstrap:
+    admin:
+      enabled: true
+      email: admin@signalvelocity.local
+      password: ChangeMe123!
+  security:
+    jwt:
+      secret: local-development-jwt-secret-local-development-jwt-secret
+      expiration: 86400000
+    cors:
+      allowed-origins: http://localhost:*,http://127.0.0.1:*
+    rate-limit:
+      enabled: false
+      requests-per-minute: 300
+  webhooks:
+    delivery-secret: local-webhook-secret
+  scheduler:
+    campaign-dispatch-delay: 1000
+  sms:
+    default-provider: ${SMS_DEFAULT_PROVIDER:demo}
+    fallback-provider: ${SMS_FALLBACK_PROVIDER:demo}
+    default-sender-id: ${SMS_DEFAULT_SENDER_ID:SIGNALV}
+    routing:
+      country-code: ${SMS_COUNTRY_CODE:237}
+      operator-providers:
+        orange-cm: ${SMS_ROUTE_ORANGE_PROVIDER:orange-cm}
+        mtn-cm: ${SMS_ROUTE_MTN_PROVIDER:mtn-cm}
+        camtel: ${SMS_ROUTE_CAMTEL_PROVIDER:camtel}
+      # Example prefixes only. Validate the commercial numbering plan with each operator before using live mode.
+      operator-prefixes:
+        orange-cm:
+          - "23769"
+        mtn-cm:
+          - "23767"
+          - "23768"
+        camtel:
+          - "237620"
+    providers:
+      demo:
+        enabled: ${SMS_DEMO_ENABLED:true}
+        mode: ${SMS_DEMO_MODE:demo}
+        sender-id: ${SMS_DEMO_SENDER_ID:SIGNALV}
+      orange-cm:
+        enabled: ${SMS_ORANGE_ENABLED:true}
+        mode: ${SMS_ORANGE_MODE:demo}
+        sender-id: ${SMS_ORANGE_SENDER_ID:SIGNALV}
+        sender-address: ${SMS_ORANGE_SENDER_ADDRESS:tel:+2370000}
+        auth-url: ${SMS_ORANGE_AUTH_URL:}
+        send-url: ${SMS_ORANGE_SEND_URL:}
+        authorization-header: ${SMS_ORANGE_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_ORANGE_CLIENT_ID:}
+        client-secret: ${SMS_ORANGE_CLIENT_SECRET:}
+      mtn-cm:
+        enabled: ${SMS_MTN_ENABLED:true}
+        mode: ${SMS_MTN_MODE:demo}
+        sender-id: ${SMS_MTN_SENDER_ID:MTNCM}
+        auth-url: ${SMS_MTN_AUTH_URL:}
+        send-url: ${SMS_MTN_SEND_URL:}
+        authorization-header: ${SMS_MTN_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_MTN_CLIENT_ID:}
+        client-secret: ${SMS_MTN_CLIENT_SECRET:}
+        api-key: ${SMS_MTN_API_KEY:}
+        product-key: ${SMS_MTN_PRODUCT_KEY:}
+      camtel:
+        enabled: ${SMS_CAMTEL_ENABLED:true}
+        mode: ${SMS_CAMTEL_MODE:demo}
+        sender-id: ${SMS_CAMTEL_SENDER_ID:CAMTEL}
+        auth-url: ${SMS_CAMTEL_AUTH_URL:}
+        send-url: ${SMS_CAMTEL_SEND_URL:}
+        authorization-header: ${SMS_CAMTEL_AUTHORIZATION_HEADER:}
+        client-id: ${SMS_CAMTEL_CLIENT_ID:}
+        client-secret: ${SMS_CAMTEL_CLIENT_SECRET:}

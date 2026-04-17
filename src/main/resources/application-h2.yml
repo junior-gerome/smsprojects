@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:smsplatform;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+app:
+  bootstrap:
+    admin:
+      enabled: true
+      email: admin@signalvelocity.local
+      password: ChangeMe123!
+  security:
+    jwt:
+      secret: local-development-jwt-secret-local-development-jwt-secret
+      expiration: 86400000
+    cors:
+      allowed-origins: http://localhost:*,http://127.0.0.1:*
+    rate-limit:
+      enabled: false
+      requests-per-minute: 300
+  webhooks:
+    delivery-secret: local-webhook-secret
+  scheduler:
+    campaign-dispatch-delay: 1000
+  sms:
+    default-provider: demo
+    fallback-provider: demo
+    default-sender-id: SIGNALV
+    providers:
+      demo:
+        enabled: true
+        mode: demo
+        sender-id: SIGNALV
