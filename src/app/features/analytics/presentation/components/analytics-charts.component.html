@@ -1,0 +1,50 @@
+
+    <div class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        @for (metric of metrics(); track metric.label) {
+          <ui-stat-card
+            [label]="metric.label"
+            [value]="metric.value"
+            [change]="metric.change"
+            trend="up"
+            [tone]="metric.tone"
+            [icon]="metric.icon"
+          />
+        }
+      </div>
+
+      <section class="section-card">
+        <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Tableaux de bord operationnels' : 'Operational scorecards' }}</p>
+        <h2 class="mt-2 text-lg font-bold text-on-surface">
+          {{ i18n.language() === 'fr' ? 'Sante messaging, campagnes et automation' : 'Messaging, campaign and automation health' }}
+        </h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          @for (point of performance(); track point.label) {
+            <article class="rounded-[1.5rem] bg-surface-container-low p-4">
+              <p class="text-sm font-semibold text-on-surface">{{ point.label }}</p>
+              <div class="mt-4 space-y-3">
+                <div>
+                  <div class="mb-1 flex items-center justify-between text-xs text-on-surface-variant">
+                    <span>{{ point.primaryLabel }}</span>
+                    <span>{{ point.primaryValue }}%</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-surface-container-high">
+                    <div class="h-full rounded-full bg-secondary" [style.width.%]="point.primaryValue"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mb-1 flex items-center justify-between text-xs text-on-surface-variant">
+                    <span>{{ point.secondaryLabel }}</span>
+                    <span>{{ point.secondaryValue }}%</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-surface-container-high">
+                    <div class="h-full rounded-full bg-primary" [style.width.%]="point.secondaryValue"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    </div>
+  

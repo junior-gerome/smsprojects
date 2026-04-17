@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr" class="notranslate" translate="no">
+<head>
+  <meta charset="utf-8">
+  <title>Kinetic SMS Console</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Console frontend Angular 18 pour la plateforme Kinetic SMS.">
+  <meta name="google" content="notranslate">
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem('kinetic-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const dark = saved ? saved === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1&display=swap" rel="stylesheet">
+</head>
+<body class="notranslate bg-background font-body text-on-surface antialiased" translate="no">
+  <app-root class="notranslate" translate="no"></app-root>
+</body>
+</html>

@@ -1,0 +1,56 @@
+
+    <div class="space-y-6">
+      <ui-page-header
+        [eyebrow]="i18n.language() === 'fr' ? 'Content Library' : 'Content Library'"
+        [title]="i18n.t('templates.title')"
+        [description]="i18n.t('templates.description')"
+      >
+        <div actions>
+          <button type="button" class="btn-secondary" (click)="facade.load()">
+            <span class="material-symbols-outlined">refresh</span>
+            {{ i18n.t('templates.refresh') }}
+          </button>
+          <button type="button" class="btn-primary" (click)="facade.openForm()">
+            <span class="material-symbols-outlined">library_add</span>
+            {{ i18n.language() === 'fr' ? 'Nouveau template' : 'New template' }}
+          </button>
+        </div>
+      </ui-page-header>
+
+      @if (facade.error()) {
+        <div class="rounded-[1.75rem] border border-error/20 bg-error/10 px-5 py-4 text-sm text-error">
+          {{ facade.error() }}
+        </div>
+      }
+
+      @if (facade.successMessage()) {
+        <div class="rounded-[1.75rem] border border-success/20 bg-success/10 px-5 py-4 text-sm text-success">
+          {{ facade.successMessage() }}
+        </div>
+      }
+
+      @if (facade.loading()) {
+        <section class="section-card">
+          <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Sync' : 'Sync' }}</p>
+          <h2 class="mt-2 text-lg font-bold text-on-surface">{{ i18n.t('templates.loadingTitle') }}</h2>
+          <p class="mt-2 text-sm text-on-surface-variant">{{ i18n.t('templates.loadingDescription') }}</p>
+        </section>
+      } @else {
+        @if (facade.formOpen()) {
+          <app-template-form
+            [saving]="facade.saving()"
+            (submit)="facade.saveTemplate($event)"
+            (cancel)="facade.closeForm()"
+          />
+        }
+
+        <app-template-grid
+          [templates]="facade.templates()"
+          [selectedId]="selectedId()"
+          (select)="facade.selectTemplate($event)"
+        />
+
+        <app-template-preview [template]="facade.selectedTemplate()" />
+      }
+    </div>
+  

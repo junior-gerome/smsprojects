@@ -1,0 +1,36 @@
+
+    <section class="section-card">
+      <div class="mb-6 flex items-start justify-between">
+        <div>
+          <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Segment' : 'Segment' }}</p>
+          <h2 class="mt-2 text-lg font-bold text-on-surface">{{ i18n.language() === 'fr' ? 'Creer un groupe' : 'Create group' }}</h2>
+        </div>
+        <button type="button" class="btn-ghost px-2" (click)="cancel.emit()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="space-y-4" [formGroup]="form" (ngSubmit)="submitForm()">
+        <label class="block space-y-2 text-sm font-semibold text-on-surface">
+          <span>{{ i18n.language() === 'fr' ? 'Nom du groupe' : 'Group name' }}</span>
+          <input class="input-shell" type="text" formControlName="name" />
+        </label>
+
+        <label class="block space-y-2 text-sm font-semibold text-on-surface">
+          <span>{{ i18n.language() === 'fr' ? 'Description' : 'Description' }}</span>
+          <textarea class="input-shell min-h-28 resize-none" formControlName="description"></textarea>
+        </label>
+
+        @if (form.invalid && form.touched) {
+          <div class="rounded-2xl border border-error/20 bg-error/10 px-4 py-3 text-sm text-error">
+            {{ i18n.language() === 'fr' ? 'Le nom du groupe est obligatoire.' : 'Group name is required.' }}
+          </div>
+        }
+
+        <button type="submit" class="btn-primary w-full justify-center" [disabled]="saving()">
+          <span class="material-symbols-outlined">group_add</span>
+          {{ saving() ? (i18n.language() === 'fr' ? 'Creation...' : 'Creating...') : (i18n.language() === 'fr' ? 'Creer le groupe' : 'Create group') }}
+        </button>
+      </form>
+    </section>
+  

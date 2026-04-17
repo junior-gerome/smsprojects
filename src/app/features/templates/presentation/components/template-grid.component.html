@@ -1,0 +1,23 @@
+
+    <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+      @for (template of templates(); track template.id) {
+        <button
+          type="button"
+          [class]="templateCardClass(template.id)"
+          (click)="select.emit(template.id)"
+        >
+          <div class="flex items-center justify-between gap-3">
+            <ui-status-chip [label]="template.category" tone="primary" />
+            <span class="text-xs font-semibold tracking-[0.06em] text-on-surface-variant">{{ template.usage }}</span>
+          </div>
+          <h3 class="mt-4 text-lg font-bold text-on-surface">{{ template.name }}</h3>
+          <p class="mt-2 text-sm text-on-surface-variant">{{ template.description }}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            @for (variable of template.variables; track variable) {
+              <ui-status-chip [label]="variable" tone="success" [dot]="false" />
+            }
+          </div>
+        </button>
+      }
+    </div>
+  

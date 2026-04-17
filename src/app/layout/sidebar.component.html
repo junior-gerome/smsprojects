@@ -1,0 +1,68 @@
+
+    <aside
+      class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col gap-6 border-r border-outline/10 bg-surface-container-lowest/88 p-4 shadow-soft backdrop-blur-2xl transition-transform duration-300 lg:translate-x-0 overflow-y-auto"
+      [class.translate-x-0]="mobileOpen()"
+      [class.-translate-x-full]="!mobileOpen()"
+    >
+      <div class="flex items-center justify-between rounded-3xl bg-surface-container-low p-4 ring-1 ring-outline/10">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-soft to-primary-container text-white shadow-glow">
+            <span class="material-symbols-outlined logo-icon">logo</span>
+          </div>
+          <div>
+            <p class="text-lg font-extrabold tracking-tight text-on-surface">Kinetic SMS</p>
+            <p class="text-[0.72rem] font-medium tracking-[0.04em] text-on-surface-variant">
+              {{ i18n.t('sidebar.subtitle') }}
+            </p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-ghost px-2 lg:hidden" (click)="close.emit()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <button type="button" class="btn-primary w-full justify-center" [routerLink]="'/campaigns'" (click)="navigate.emit()">
+        <span class="material-symbols-outlined">+</span>
+        {{ i18n.t('sidebar.newCampaign') }}
+      </button>
+
+      <nav class="flex-1 space-y-1.5">
+        @for (item of items(); track item.route) {
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="bg-primary/12 text-primary ring-1 ring-primary/10 shadow-sm"
+            class="group flex items-start gap-3 rounded-2xl px-4 py-3 text-sm font-medium tracking-normal text-on-surface-variant transition hover:bg-surface-container-low hover:text-on-surface"
+            (click)="navigate.emit()"
+          >
+            <span
+              class="nav-icon mt-0.5"
+              aria-hidden="true"
+              [style.--icon-url]="'url(' + item.icon + ')'"
+            ></span>
+            <span class="flex flex-col gap-0.5">
+              <span class="text-[0.95rem] font-semibold text-current">{{ item.label }}</span>
+              <span class="text-xs leading-5 text-on-surface-variant/80">{{ item.description }}</span>
+            </span>
+          </a>
+        }
+      </nav>
+
+      <div class="rounded-[1.75rem] bg-surface-container-low p-4 ring-1 ring-outline/10">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-primary/80 to-secondary/80 text-sm font-bold text-white">
+            {{ userInitials() }}
+          </div>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-bold text-on-surface">{{ userName() }}</p>
+            <p class="truncate text-xs font-medium tracking-normal text-on-surface-variant">{{ primaryRoleLabel() }}</p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-secondary mt-4 w-full justify-center" (click)="logout()">
+          <span class="material-symbols-outlined"></span>
+          {{ i18n.t('sidebar.logout') }}
+        </button>
+      </div>
+    </aside>
+  

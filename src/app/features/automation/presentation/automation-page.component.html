@@ -1,0 +1,49 @@
+
+    <div class="space-y-6">
+      <ui-page-header
+        [eyebrow]="i18n.language() === 'fr' ? 'Workflow Studio' : 'Workflow Studio'"
+        [title]="i18n.t('automation.title')"
+        [description]="i18n.t('automation.description')"
+      >
+        <div actions>
+          <button type="button" class="btn-primary" [disabled]="facade.saving()" (click)="facade.createStarterWorkflow()">
+            <span class="material-symbols-outlined">add</span>
+            {{ facade.saving() ? (i18n.language() === 'fr' ? 'Creation...' : 'Creating...') : (i18n.language() === 'fr' ? 'Creer un workflow' : 'Create workflow') }}
+          </button>
+        </div>
+      </ui-page-header>
+
+      @if (facade.error()) {
+        <div class="rounded-[1.75rem] border border-error/20 bg-error/10 px-5 py-4 text-sm text-error">
+          {{ facade.error() }}
+        </div>
+      }
+
+      @if (facade.successMessage()) {
+        <div class="rounded-[1.75rem] border border-success/20 bg-success/10 px-5 py-4 text-sm text-success">
+          {{ facade.successMessage() }}
+        </div>
+      }
+
+      @if (facade.loading()) {
+        <section class="section-card">
+          <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Sync automation' : 'Automation sync' }}</p>
+          <h2 class="mt-2 text-lg font-bold text-on-surface">
+            {{ i18n.language() === 'fr' ? 'Chargement des workflows' : 'Loading workflows' }}
+          </h2>
+          <p class="mt-2 text-sm text-on-surface-variant">
+            {{
+              i18n.language() === 'fr'
+                ? 'Synchronisation des workflows et enseignements operationnels depuis le backend.'
+                : 'Synchronizing automation records and operational learnings from the backend.'
+            }}
+          </p>
+        </section>
+      } @else {
+        <div class="grid gap-4 xl:grid-cols-[minmax(0,1.3fr)_380px]">
+          <app-workflow-builder [workflow]="facade.workflow()" />
+          <app-automation-insights [blueprints]="facade.blueprints()" [insights]="facade.insights()" />
+        </div>
+      }
+    </div>
+  

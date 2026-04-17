@@ -1,0 +1,19 @@
+
+    <section class="section-card">
+      @if (template(); as currentTemplate) {
+        <p class="eyebrow">{{ i18n.t('templates.previewEyebrow') }}</p>
+        <h2 class="mt-2 text-xl font-bold text-on-surface">{{ currentTemplate.name }}</h2>
+        <p class="mt-2 text-sm text-on-surface-variant">{{ currentTemplate.description }}</p>
+
+        <div class="mt-6 rounded-[1.5rem] bg-surface-container-low p-5">
+          <p class="text-sm leading-7 text-on-surface">{{ currentTemplate.body }}</p>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-2">
+          @for (variable of currentTemplate.variables; track variable) {
+            <ui-status-chip [label]="variable" tone="primary" [dot]="false" />
+          }
+        </div>
+      }
+    </section>
+  

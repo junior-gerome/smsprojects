@@ -1,0 +1,35 @@
+
+    <section class="section-card">
+      <div class="mb-6">
+        <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Automation architect' : 'Automation architect' }}</p>
+        <h2 class="mt-2 text-lg font-bold text-on-surface">{{ i18n.language() === 'fr' ? 'Workflow builder' : 'Workflow builder' }}</h2>
+      </div>
+
+      <div class="space-y-4">
+        @if (workflow().length) {
+          @for (step of workflow(); track step.id) {
+            <article class="rounded-[1.5rem] bg-surface-container-low p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <span class="material-symbols-outlined">{{ icon(step.type) }}</span>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold tracking-[0.06em] text-on-surface-variant">{{ stepTypeLabel(step.type) }}</p>
+                  <h3 class="mt-1 text-sm font-bold text-on-surface">{{ step.title }}</h3>
+                  <p class="mt-1 text-sm text-on-surface-variant">{{ step.description }}</p>
+                </div>
+              </div>
+            </article>
+          }
+        } @else {
+          <div class="rounded-[1.5rem] bg-surface-container-low px-5 py-8 text-center text-sm text-on-surface-variant">
+            {{
+              i18n.language() === 'fr'
+                ? 'Aucun workflow n a encore ete cree. Utilisez "Creer un workflow" pour persister une premiere automation.'
+                : 'No workflow has been created yet. Use "Create workflow" to persist a first automation.'
+            }}
+          </div>
+        }
+      </div>
+    </section>
+  

@@ -1,0 +1,103 @@
+
+    <section class="section-card">
+      <div class="mb-6">
+        <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Brouillon message' : 'Message draft' }}</p>
+        <h2 class="mt-2 text-lg font-bold text-on-surface">{{ i18n.language() === 'fr' ? 'Editeur SMS' : 'SMS editor' }}</h2>
+      </div>
+
+      <div class="space-y-4">
+        <input
+          #nameInput
+          class="input-shell"
+          [value]="name()"
+          (input)="nameChange.emit(nameInput.value)"
+          [placeholder]="i18n.language() === 'fr' ? 'Nom de campagne' : 'Campaign name'"
+        />
+
+        <label class="block space-y-2 text-sm font-semibold text-on-surface">
+          <span>{{ i18n.language() === 'fr' ? 'Template' : 'Template' }}</span>
+          <select class="input-shell" [value]="selectedTemplateId()" (change)="templateChange.emit(templateSelect.value)" #templateSelect>
+            <option value="">{{ i18n.language() === 'fr' ? 'Aucun template' : 'No template' }}</option>
+            @for (template of templates(); track template.id) {
+              <option [value]="template.id">{{ template.name }}</option>
+            }
+          </select>
+        </label>
+
+        <div class="rounded-[1.5rem] bg-surface-container-low p-4">
+          <div class="mb-3">
+            <p class="mb-2 text-xs font-semibold tracking-[0.06em] text-on-surface-variant">
+              {{ i18n.language() === 'fr' ? 'Variables dynamiques' : 'Dynamic variables' }}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              @for (variable of variables(); track variable.token) {
+                <button
+                  type="button"
+                  class="btn-secondary min-w-[9.5rem] flex-col items-start gap-1 px-3 py-2 text-left"
+                  (click)="insertVariable.emit(variable.token)"
+                >
+                  <span class="text-xs font-semibold text-on-surface">{{ variable.label }}</span>
+                  <span class="font-mono text-[0.7rem] text-on-surface-variant">{{ variable.helper || variable.token }}</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <textarea
+            #messageInput
+            class="input-shell min-h-40 resize-none"
+            [value]="message()"
+            (input)="messageChange.emit(messageInput.value)"
+            [placeholder]="
+              i18n.language() === 'fr'
+                ? 'Redigez le contenu SMS qui sera envoye a l audience selectionnee.'
+                : 'Write the SMS content that will be sent to the selected audience.'
+            "
+          ></textarea>
+
+          <p class="mt-2 text-xs text-on-surface-variant">
+            {{
+              i18n.language() === 'fr'
+                ? 'Les variables ajoutees dans le message seront resolues au moment de l envoi.'
+                : 'Variables added in the message will be resolved at send time.'
+            }}
+          </p>
+
+          <div class="mt-3 flex items-center justify-between text-xs font-semibold text-on-surface-variant">
+            <span>
+              {{ i18n.language() === 'fr' ? characters() + ' / 160 caracteres' : characters() + ' / 160 characters' }}
+            </span>
+            <span>{{ segments() }} segment(s)</span>
+          </div>
+        </div>
+
+        <label class="flex items-center justify-between rounded-[1.5rem] bg-surface-container-low p-4 text-sm text-on-surface">
+          <span>{{ i18n.language() === 'fr' ? 'Reduction automatique des URL' : 'Auto-shorten URLs' }}</span>
+          <button
+            type="button"
+            class="relative h-7 w-14 rounded-full transition"
+            [class.bg-primary]="shortenLinks()"
+            [class.bg-surface-container-high]="!shortenLinks()"
+            (click)="toggleLinks.emit()"
+          >
+            <span
+              class="absolute top-1 h-5 w-5 rounded-full bg-surface-container-lowest shadow transition"
+              [class.left-1]="!shortenLinks()"
+              [class.left-8]="shortenLinks()"
+            ></span>
+          </button>
+        </label>
+
+        @if (validationMessage()) {
+          <div class="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-on-surface">
+            {{ validationMessage() }}
+          </div>
+        }
+
+        <button type="button" class="btn-primary w-full justify-center" [disabled]="!canLaunch()" (click)="launch.emit()">
+          <span class="material-symbols-outlined">rocket_launch</span>
+          {{ saving() ? (i18n.language() === 'fr' ? 'Traitement...' : 'Processing...') : (i18n.language() === 'fr' ? 'Creer la campagne' : 'Create campaign') }}
+        </button>
+      </div>
+    </section>
+  

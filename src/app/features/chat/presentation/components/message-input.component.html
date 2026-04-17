@@ -1,0 +1,17 @@
+
+    <section class="section-card">
+      <div class="flex gap-3">
+        <textarea
+          class="input-shell min-h-24 flex-1 resize-none"
+          [disabled]="disabled() || sending()"
+          [ngModel]="message()"
+          (ngModelChange)="message.set($event)"
+          [placeholder]="i18n.language() === 'fr' ? 'Redigez votre reponse SMS...' : 'Write your SMS reply...'"
+        ></textarea>
+        <button type="button" class="btn-primary self-end" [disabled]="disabled() || sending()" (click)="sendMessage()">
+          <span class="material-symbols-outlined">send</span>
+          {{ sending() ? (i18n.language() === 'fr' ? 'Envoi...' : 'Sending...') : (i18n.language() === 'fr' ? 'Envoyer' : 'Send') }}
+        </button>
+      </div>
+    </section>
+  

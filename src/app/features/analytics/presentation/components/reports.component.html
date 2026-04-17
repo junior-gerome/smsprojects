@@ -1,0 +1,33 @@
+<section class="section-card">
+  <div class="mb-6">
+    <p class="eyebrow">
+      {{ i18n.language() === "fr" ? "Rapports" : "Reports" }}
+    </p>
+    <h2 class="mt-2 text-lg font-bold text-on-surface">
+      {{
+        i18n.language() === "fr"
+          ? "Rapports planifies et exportables"
+          : "Scheduled and exportable reports"
+      }}
+    </h2>
+  </div>
+
+  <div class="space-y-3">
+    @for (report of reports(); track report.id) {
+      <article class="rounded-[1.5rem] bg-surface-container-low p-4">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-on-surface">{{ report.name }}</h3>
+            <p class="mt-1 text-sm text-on-surface-variant">
+              {{ report.period }} · {{ report.summary }}
+            </p>
+          </div>
+          <ui-status-chip
+            [label]="statusLabel(report.status)"
+            [tone]="report.status === 'ready' ? 'success' : 'primary'"
+          />
+        </div>
+      </article>
+    }
+  </div>
+</section>

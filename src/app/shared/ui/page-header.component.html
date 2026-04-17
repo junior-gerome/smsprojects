@@ -1,0 +1,21 @@
+
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl space-y-3.5">
+        @if (eyebrow()) {
+          <p class="eyebrow">{{ eyebrow() }}</p>
+        }
+        <div class="space-y-2.5">
+          <h1 class="font-headline text-3xl font-extrabold leading-tight tracking-tight text-on-surface sm:text-[2.8rem]">
+            {{ title() }}
+          </h1>
+          <p class="max-w-2xl text-sm font-medium leading-7 text-on-surface-variant sm:text-[1rem]">
+            {{ description() }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <ng-content select="[actions]"></ng-content>
+      </div>
+    </div>
+  

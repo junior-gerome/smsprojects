@@ -1,0 +1,37 @@
+
+    <section class="section-card min-h-[32rem]">
+      @if (conversation(); as currentConversation) {
+        <div class="mb-6 flex items-center justify-between gap-3">
+          <div>
+            <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Chat live' : 'Live chat' }}</p>
+            <h2 class="mt-2 text-lg font-bold text-on-surface">{{ currentConversation.name }}</h2>
+          </div>
+          <div class="rounded-2xl bg-surface-container-low px-4 py-2 text-sm text-on-surface-variant">
+            {{ statusLabel(currentConversation.status) }}
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          @for (message of currentConversation.messages; track message.id) {
+            <div class="flex" [class.justify-end]="message.author === 'agent'">
+              <div
+                class="max-w-[75%] rounded-[1.5rem] px-4 py-3 text-sm"
+                [ngClass]="message.author === 'agent'
+                  ? 'rounded-tr-md bg-primary-container text-on-primary-container'
+                  : 'rounded-tl-md bg-surface-container-low text-on-surface'"
+              >
+                <p>{{ message.content }}</p>
+                <p class="mt-2 text-xs opacity-70">
+                  {{ message.time }} {{ message.status ? ' - ' + messageStatusLabel(message.status) : '' }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="flex min-h-[24rem] items-center justify-center rounded-[1.5rem] bg-surface-container-low text-on-surface-variant">
+          {{ i18n.language() === 'fr' ? 'Selectionnez une conversation' : 'Select a conversation' }}
+        </div>
+      }
+    </section>
+  

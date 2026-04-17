@@ -1,0 +1,55 @@
+
+    <div class="space-y-6">
+      <ui-page-header
+        [eyebrow]="i18n.language() === 'fr' ? 'Realtime Support' : 'Realtime Support'"
+        [title]="i18n.t('chat.title')"
+        [description]="i18n.t('chat.description')"
+      >
+        <div actions>
+          <button type="button" class="btn-secondary" [disabled]="facade.sending()" (click)="facade.sendQuickReply()">
+            <span class="material-symbols-outlined">bolt</span>
+            {{ facade.sending() ? (i18n.language() === 'fr' ? 'Envoi...' : 'Sending...') : (i18n.language() === 'fr' ? 'Reponse rapide' : 'Quick reply') }}
+          </button>
+        </div>
+      </ui-page-header>
+
+      @if (facade.error()) {
+        <div class="rounded-[1.75rem] border border-error/20 bg-error/10 px-5 py-4 text-sm text-error">
+          {{ facade.error() }}
+        </div>
+      }
+
+      @if (facade.loading()) {
+        <section class="section-card">
+          <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Sync inbox' : 'Inbox sync' }}</p>
+          <h2 class="mt-2 text-lg font-bold text-on-surface">
+            {{ i18n.language() === 'fr' ? 'Chargement des conversations' : 'Loading conversations' }}
+          </h2>
+          <p class="mt-2 text-sm text-on-surface-variant">
+            {{
+              i18n.language() === 'fr'
+                ? "Recuperation de l'historique des conversations SMS depuis le backend."
+                : 'Fetching SMS conversation history from the backend.'
+            }}
+          </p>
+        </section>
+      } @else {
+        <div class="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+          <app-conversation-list
+            [conversations]="facade.conversations()"
+            [selectedId]="selectedId()"
+            (select)="facade.selectConversation($event)"
+          />
+
+          <div class="space-y-4">
+            <app-chat-window [conversation]="facade.selectedConversation()" />
+            <app-message-input
+              [disabled]="!facade.selectedConversation()"
+              [sending]="facade.sending()"
+              (submit)="facade.sendMessage($event)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  

@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: 248 249 255;
+  --surface: 248 249 255;
+  --surface-bright: 255 255 255;
+  --surface-container-lowest: 255 255 255;
+  --surface-container-low: 238 244 255;
+  --surface-container: 227 234 248;
+  --surface-container-high: 215 224 243;
+  --surface-container-highest: 205 214 235;
+  --surface-variant: 221 228 241;
+  --on-surface: 18 28 40;
+  --on-surface-variant: 91 102 124;
+  --outline: 145 143 154;
+  --outline-variant: 70 69 85;
+  --primary: 57 44 193;
+  --primary-soft: 83 74 217;
+  --on-primary: 255 255 255;
+  --primary-container: 219 215 255;
+  --on-primary-container: 16 0 105;
+  --secondary: 37 167 118;
+  --secondary-container: 214 247 231;
+  --on-secondary-container: 0 56 37;
+  --tertiary: 214 76 103;
+  --tertiary-container: 255 226 231;
+  --on-tertiary-container: 86 29 42;
+  --error: 211 67 67;
+  --error-container: 255 222 219;
+  --success: 41 181 116;
+  --warning: 245 158 11;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: 15 23 42;
+  --surface: 18 28 40;
+  --surface-bright: 26 28 30;
+  --surface-container-lowest: 11 14 20;
+  --surface-container-low: 26 31 38;
+  --surface-container: 30 36 43;
+  --surface-container-high: 43 47 51;
+  --surface-container-highest: 54 58 64;
+  --surface-variant: 70 69 85;
+  --on-surface: 226 226 230;
+  --on-surface-variant: 199 196 216;
+  --outline: 145 143 154;
+  --outline-variant: 70 69 85;
+  --primary: 195 192 255;
+  --primary-soft: 112 102 255;
+  --on-primary: 16 0 105;
+  --primary-container: 57 44 193;
+  --on-primary-container: 219 215 255;
+  --secondary: 104 219 169;
+  --secondary-container: 0 81 55;
+  --on-secondary-container: 130 245 193;
+  --tertiary: 255 179 182;
+  --tertiary-container: 114 0 28;
+  --on-tertiary-container: 255 218 218;
+  --error: 255 180 171;
+  --error-container: 147 0 10;
+  --success: 104 219 169;
+  --warning: 251 191 36;
+}
+
+@layer base {
+  * {
+    @apply border-outline/10;
+  }
+
+  html {
+    @apply scroll-smooth;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-on-surface;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-synthesis-weight: none;
+    background-image:
+      radial-gradient(circle at top right, rgb(var(--primary-soft) / 0.13), transparent 24rem),
+      radial-gradient(circle at bottom left, rgb(var(--secondary) / 0.12), transparent 20rem),
+      linear-gradient(180deg, rgb(var(--background)), rgb(var(--surface)));
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    @apply outline-none;
+  }
+
+  ::selection {
+    background: rgb(var(--primary) / 0.16);
+  }
+}
+
+@layer components {
+  .app-card {
+    @apply rounded-3xl bg-surface-container-lowest/90 shadow-soft ring-1 ring-outline/10;
+  }
+
+  .section-card {
+    @apply rounded-[1.75rem] bg-surface-container-lowest/90 p-6 shadow-soft ring-1 ring-outline/10;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-2xl bg-gradient-to-br from-primary-soft to-primary-container px-4 py-2.5 text-sm font-semibold tracking-normal text-white shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:brightness-100;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-2xl bg-surface-container-high px-4 py-2.5 text-sm font-semibold tracking-normal text-on-surface transition hover:bg-surface-container-highest disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-surface-container-high;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold tracking-normal text-primary transition hover:bg-primary/5;
+  }
+
+  .input-shell {
+    @apply w-full rounded-2xl bg-surface-container-low px-4 py-3 text-sm font-medium tracking-normal text-on-surface placeholder:text-on-surface-variant/80 transition focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/30;
+  }
+
+  .eyebrow {
+    @apply text-[0.72rem] font-semibold tracking-[0.08em] text-primary;
+  }
+
+  .nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    display: inline-block;
+    background-color: currentColor;
+    mask: var(--icon-url) center / contain no-repeat;
+    -webkit-mask: var(--icon-url) center / contain no-repeat;
+  }
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+  }
+}

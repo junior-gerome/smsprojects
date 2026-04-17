@@ -1,0 +1,43 @@
+
+    <section class="section-card space-y-6">
+      <div>
+        <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Audience' : 'Audience' }}</p>
+        <h2 class="mt-2 text-lg font-bold text-on-surface">
+          {{ i18n.language() === 'fr' ? 'Builder de campagne' : 'Campaign builder' }}
+        </h2>
+      </div>
+
+      <div class="space-y-3">
+        @for (audience of audiences(); track audience.id) {
+          <button type="button" [class]="audienceButtonClass(audience.id)" (click)="selectAudience.emit(audience.id)">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <h3 class="text-sm font-bold text-on-surface">{{ audience.label }}</h3>
+                <p class="mt-1 text-sm text-on-surface-variant">{{ audience.description }}</p>
+              </div>
+              <ui-status-chip [label]="audience.recipients + ' contacts'" tone="primary" [dot]="false" />
+            </div>
+          </button>
+        }
+      </div>
+
+      <div>
+        <h3 class="mb-3 text-sm font-bold tracking-[0.06em] text-on-surface-variant">
+          {{ i18n.language() === 'fr' ? 'Campagnes recentes' : 'Recent campaigns' }}
+        </h3>
+        <div class="space-y-3">
+          @for (campaign of recentCampaigns(); track campaign.id) {
+            <article class="rounded-[1.5rem] bg-surface-container-low p-4">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <h4 class="text-sm font-bold text-on-surface">{{ campaign.name }}</h4>
+                  <p class="mt-1 text-sm text-on-surface-variant">{{ campaign.audience }} - {{ campaign.engagement }}</p>
+                </div>
+                <ui-status-chip [label]="statusLabel(campaign.status)" [tone]="statusTone(campaign.status)" />
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+  

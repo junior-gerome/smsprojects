@@ -1,0 +1,37 @@
+
+    <div class="space-y-6">
+      <ui-page-header
+        [eyebrow]="i18n.language() === 'fr' ? 'Performance Lab' : 'Performance Lab'"
+        [title]="i18n.t('analytics.title')"
+        [description]="i18n.t('analytics.description')"
+      >
+        <div actions>
+          <button type="button" class="btn-secondary" (click)="facade.cycleFocus()">
+            <span class="material-symbols-outlined">tune</span>
+            {{ i18n.language() === 'fr' ? 'Focus' : 'Focus' }}: {{ facade.focusLabel() }}
+          </button>
+          <button type="button" class="btn-secondary" (click)="facade.load()">
+            <span class="material-symbols-outlined">refresh</span>
+            {{ i18n.t('analytics.refresh') }}
+          </button>
+        </div>
+      </ui-page-header>
+
+      @if (facade.error()) {
+        <div class="rounded-[1.75rem] border border-error/20 bg-error/10 px-5 py-4 text-sm text-error">
+          {{ facade.error() }}
+        </div>
+      }
+
+      @if (facade.loading()) {
+        <section class="section-card">
+          <p class="eyebrow">{{ i18n.language() === 'fr' ? 'Sync analytics' : 'Analytics sync' }}</p>
+          <h2 class="mt-2 text-lg font-bold text-on-surface">{{ i18n.t('analytics.loadingTitle') }}</h2>
+          <p class="mt-2 text-sm text-on-surface-variant">{{ i18n.t('analytics.loadingDescription') }}</p>
+        </section>
+      } @else {
+        <app-analytics-charts [metrics]="facade.metrics()" [performance]="facade.performance()" />
+        <app-analytics-reports [reports]="facade.reports()" />
+      }
+    </div>
+  

@@ -1,0 +1,103 @@
+
+    <div class="space-y-6">
+      <ui-page-header
+        [eyebrow]="i18n.language() === 'fr' ? 'Audience Studio' : 'Audience Studio'"
+        [title]="i18n.t('contacts.title')"
+        [description]="i18n.t('contacts.description')"
+      >
+        <div actions>
+          <button type="button" class="btn-secondary" (click)="facade.openImport()">
+            <span class="material-symbols-outlined">upload</span>
+            {{ i18n.t('contacts.import') }}
+          </button>
+          <button type="button" class="btn-secondary" (click)="facade.openGroupForm()">
+            <span class="material-symbols-outlined">groups</span>
+            {{ i18n.language() === 'fr' ? 'Nouveau groupe' : 'New group' }}
+          </button>
+          <button type="button" class="btn-primary" (click)="facade.openForm()">
+            <span class="material-symbols-outlined">person_add</span>
+            {{ i18n.t('contacts.add') }}
+          </button>
+        </div>
+      </ui-page-header>
+
+      @if (facade.error()) {
+        <div class="rounded-[1.75rem] border border-error/20 bg-error/10 px-5 py-4 text-sm text-error">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span>{{ facade.error() }}</span>
+            <button type="button" class="btn-secondary" (click)="reload()">{{ i18n.t('common.retry') }}</button>
+          </div>
+        </div>
+      }
+
+      @if (facade.successMessage()) {
+        <div class="rounded-[1.75rem] border border-success/20 bg-success/10 px-5 py-4 text-sm text-success">
+          {{ facade.successMessage() }}
+        </div>
+      }
+
+      @if (facade.loading()) {
+        <ui-surface-card
+          [eyebrow]="i18n.language() === 'fr' ? 'Sync' : 'Sync'"
+          [title]="i18n.t('contacts.loadingTitle')"
+          [description]="i18n.t('contacts.loadingDescription')"
+        />
+      } @else {
+        <div class="grid gap-4 xl:grid-cols-[minmax(0,2fr)_380px]">
+          <app-contacts-list
+            [contacts]="facade.contacts()"
+            [selectedIds]="facade.selectedIds()"
+            [activeFilters]="facade.activeFilters()"
+            (toggle)="facade.toggleSelection($event)"
+          />
+
+          @if (facade.groupFormOpen()) {
+            <app-contact-group-form
+              [saving]="facade.saving()"
+              (submit)="facade.saveGroup($event)"
+              (cancel)="facade.closeGroupForm()"
+            />
+          } @else if (facade.formOpen()) {
+            <app-contact-form
+              [groups]="facade.groups()"
+              [saving]="facade.saving()"
+              (submit)="facade.saveContact($event)"
+              (cancel)="facade.closeForm()"
+            />
+          } @else {
+            <ui-surface-card
+              [eyebrow]="i18n.language() === 'fr' ? 'Segment intelligent' : 'Smart segment'"
+              [title]="i18n.t('contacts.snapshotTitle')"
+              [description]="i18n.t('contacts.snapshotDescription')"
+            >
+              <div class="space-y-3">
+                <div class="rounded-[1.5rem] bg-surface-container-low p-4">
+                  <p class="text-sm text-on-surface-variant">{{ i18n.language() === 'fr' ? 'Top segment' : 'Top segment' }}</p>
+                  <p class="mt-2 text-2xl font-bold text-on-surface">{{ topGroupName() }}</p>
+                </div>
+                <div class="rounded-[1.5rem] bg-secondary/10 p-4 text-sm text-secondary">
+                  {{ contactsSummary() }}
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <button type="button" class="btn-secondary w-full justify-center" (click)="facade.openGroupForm()">
+                    {{ i18n.language() === 'fr' ? 'Creer un groupe' : 'Create group' }}
+                  </button>
+                  <button type="button" class="btn-secondary w-full justify-center" (click)="facade.openForm()">
+                    {{ i18n.t('contacts.create') }}
+                  </button>
+                </div>
+              </div>
+            </ui-surface-card>
+          }
+        </div>
+      }
+    </div>
+
+    <app-import-modal
+      [open]="facade.importOpen()"
+      [busy]="facade.saving()"
+      [groups]="facade.groups()"
+      (close)="facade.closeImport()"
+      (confirm)="facade.importContacts($event)"
+    />
+  

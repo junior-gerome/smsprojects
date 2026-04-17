@@ -1,0 +1,178 @@
+  {
+    "nav":{
+      "dashboard.label": "Tableau de bord",
+      "dashboard.description": "Pilotage en temps reel",
+      "contacts.label": "Contacts",
+      "contacts.description": "Audience et segmentation",
+      "campaigns.label": "Campagnes",
+      "campaigns.description": "Builder SMS",
+      "chat.label": "Chat",
+      "chat.description": "Conversations live",
+      "templates.label": "Templates",
+      "templates.description": "Bibliotheque de messages",
+      "analytics.label": "Analytics",
+      "analytics.description": "Rapports et KPI",
+      "automation.label": "Automation",
+      "automation.description": "Workflows",
+      "settings.label": "Parametres",
+      "settings.description": "Utilisateurs et cles API"
+    },
+
+    "notifications":{
+      "eyebrow": "Flux de signaux",
+      "title": "Notifications",
+      "n1.title": "Campagne distribuee",
+      "n1.body": "Summer Flash Sale a depasse 99,2% de taux de delivrabilite.",
+      "n2.title": "Automation en attente",
+      "n2.body": "Le workflow Appointment Confirmation attend 124 evenements clients.",
+      "n3.title": "Rotation de cle API",
+      "n3.body": "La cle publique SMS-EDGE-12 expire dans 3 jours."
+    },
+
+    "header":{
+      "search": "Rechercher contacts, campagnes, groupes, conversations ou templates...",
+      "search.loading": "Recherche en cours...",
+      "search.empty": "Aucun resultat correspondant.",
+      "search.short": "Saisissez au moins 2 caracteres.",
+      "search.kind.contact": "Contact",
+      "search.kind.group": "Groupe",
+      "search.kind.campaign": "Campagne",
+      "search.kind.conversation": "Conversation",
+      "search.kind.template": "Template",
+      "alerts": "Alertes",
+      "logout": "Deconnexion",
+      "language": "Langue",
+      "language.current": "Francais",
+      "securedSession": "Session securisee",
+      "theme.light": "Clair",
+      "theme.dark": "Sombre"
+    },
+
+    "sidebar":{
+      "newCampaign": "Nouvelle campagne",
+      "defaultUser": "Equipe SMS",
+      "defaultRole": "Securise",
+      "logout": "Deconnexion",
+      "subtitle": "Console entreprise"
+    },
+
+    "login":{
+      "title": "Connexion a la plateforme SMS",
+      "description": "Authentification securisee JWT, acces multi-utilisateurs et pilotage operationnel centralise.",
+      "email": "Email professionnel",
+      "password": "Mot de passe",
+      "loading": "Connexion en cours...",
+      "submit": "Se connecter",
+      "validation": "Saisissez un email valide et un mot de passe de 8 caracteres minimum.",
+      "failed": "Connexion impossible."
+    },
+
+    "dashboard":{
+      "eyebrow": "Kinetic Command",
+      "title": "Vue systeme",
+      "description": "Console operationnelle pour piloter vos KPI SMS, la sante de la plateforme et les priorites metier.",
+      "refresh": "Actualiser",
+      "startCampaign": "Demarrer une campagne",
+      "loadingTitle": "Chargement des metriques",
+      "loadingDescription": "Lecture des statistiques consolidees depuis l API analytics.",
+      "systemHealthTitle": "Plateforme prete a scaler",
+      "systemHealthDescription": "Supervision des volumes, campagnes et automations securisees.",
+      "openBuilder": "Ouvrir le builder",
+      "manageTemplates": "Gerer les templates",
+      "healthNote": "Livraison securisee, JWT actif, donnees synchronisees et observabilite orientee metier.",
+      "recentActivity": "Activite recente",
+      "recentActivityDescription": "Logs operationnels et performance recente.",
+      "viewAll": "Voir tout",
+      "loadingEyebrow": "Synchronisation",
+      "systemHealthEyebrow": "Sante systeme",
+      "volumeTrends": "Tendances de volume",
+      "volumeDescription": "Lecture des volumes diffuses et de la dynamique recente.",
+      "volumeSeriesPrimary": "Serie principale",
+      "volumeSeriesSecondary": "Serie secondaire",
+      "distributionTitle": "Distribution des envois",
+      "distributionDescription": "Repartition actuelle entre livraison, file d attente et echecs.",
+      "distributionSuccess": "Succes"
+    },
+    "contacts":{
+      "title": "Repertoire de contacts",
+      "description": "Gerez vos audiences, segmentez vos listes et synchronisez les contacts depuis l API securisee.",
+      "import": "Importer CSV",
+      "add": "Ajouter un contact",
+      "retry": "Reessayer",
+      "loadingTitle": "Chargement des contacts",
+      "loadingDescription": "Recuperation des groupes et du repertoire depuis le backend Spring Boot.",
+      "snapshotTitle": "Vue audience",
+      "snapshotDescription": "Vue consolidee des groupes et de la volumetrie synchronisee.",
+      "topSegment": "Top segment",
+      "create": "Creer un contact",
+      "noGroup": "Aucun groupe configure"
+    },
+    "campaigns":{
+      "title": "Campagnes SMS",
+      "description": "Composez, ciblez et planifiez vos campagnes SMS avec groupes, templates et workflows securises.",
+      "refresh": "Actualiser",
+      "create": "Creer la campagne",
+      "processing": "Traitement...",
+      "loadingTitle": "Chargement du builder de campagne",
+      "loadingDescription": "Recuperation des groupes, templates et campagnes recentes depuis le backend Spring Boot.",
+      "preview": "Apercu live",
+      "placeholder": "Votre message SMS apparaitra ici.",
+      "summary.now": "Envoi immediat apres validation.",
+      "summary.later": "Planifie pour {date}.",
+      "summary.empty": "Choisissez la date et l'heure d'envoi."
+    },
+    "chat":{   
+      "title": "Espace chat",
+      "description": "Suivez les conversations, repondez depuis la boite de reception backend et gardez le contexte client.",
+      "quickReply": "Reponse rapide",
+      "sending": "Envoi...",
+      "loadingTitle": "Chargement des conversations",
+      "loadingDescription": "Recuperation de l historique des conversations SMS depuis le backend."
+    },
+    "analytics":{
+      "title": "Insights de performance",
+      "description": "Visualisez les donnees reelles de la plateforme et basculez entre delivrabilite, campagnes et audience.",
+      "focus": "Focus",
+      "refresh": "Actualiser",
+      "loadingTitle": "Chargement des analytics",
+      "loadingDescription": "Recuperation des KPI live depuis le endpoint analytics Spring Boot.",
+      "focus.delivery": "Delivrabilite",
+      "focus.campaigns": "Campagnes",
+      "focus.audience": "Audience"
+    },
+    "automation":{ 
+    "title": "Architecte d'automation",
+    "description": "Creez et suivez des workflows SMS relies a de vraies donnees backend.",
+    "create": "Creer un workflow",
+    "creating": "Creation...",
+    "loadingTitle": "Chargement des workflows",
+    "loadingDescription": "Synchronisation des workflows et enseignements operationnels depuis le backend."
+    },
+    "settings":{
+      "title": "Parametres de plateforme",
+      "description": "Administrez l equipe, les roles et les acces API dans une interface coherente avec le design system.",
+      "refresh": "Actualiser",
+      "loadingTitle": "Chargement de la gouvernance",
+      "loadingDescription": "Synchronisation des utilisateurs backend et preparation des blocs securite.",
+      "providers.title": "Providers SMS",
+      "providers.description": "Visibilite temps reel sur les adapters SMS, le provider par defaut, le fallback et le niveau de configuration.",
+      "providers.mode": "Mode",
+      "providers.sender": "Sender",
+      "providers.auth": "Auth",
+      "providers.sendUrl": "Send URL",
+      "providers.credentials": "Credentials",
+      "providers.operators": "Operateurs routes",
+      "providers.none": "Aucun operateur route"
+    },
+    "templates":{
+      "title": "Bibliotheque de templates",
+      "description": "Bibliotheque reutilisable de modeles SMS synchronisee avec le backend et prete pour la personnalisation.",
+      "refresh": "Actualiser",
+      "loadingTitle": "Chargement des templates",
+      "loadingDescription": "Recuperation des modeles SMS disponibles depuis l API Spring Boot.",
+      "previewEyebrow": "Moteur de variables"
+    },
+    
+    
+    "common":{"retry": "Reessayer"}
+  }

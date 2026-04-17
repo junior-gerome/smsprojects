@@ -1,0 +1,87 @@
+
+    <header class="sticky top-0 z-40 border-b border-outline/10 bg-surface-container-lowest/80 shadow-sm backdrop-blur-xl">
+      <div class="flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+        <div class="flex min-w-0 items-center gap-3">
+          <button type="button" class="btn-secondary px-3 lg:hidden" (click)="menuToggle.emit()">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+
+          <div class="relative hidden w-full max-w-xl md:block" (click)="$event.stopPropagation()">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 z-[1] -translate-y-1/2 text-on-surface-variant"></span>
+            <input
+              title=""
+              placeholder=".."
+              #searchInput
+              class="input-shell bg-surface-container-lowest/80 pl-12"
+              type="search"
+              [value]="searchService.query()"
+              [placeholder]="i18n.t('header.search')"
+              (focus)="searchService.openPanel()"
+              (input)="onSearchInput(searchInput.value)"
+            />
+
+            @if (searchOpen()) {
+              <div class="absolute inset-x-0 top-[calc(100%+0.75rem)] z-50 overflow-hidden rounded-[1.75rem] border border-outline/10 bg-surface-container-lowest shadow-soft">
+                <div class="border-b border-outline/10 px-4 py-3 text-xs font-semibold tracking-[0.08em] text-on-surface-variant">
+                  {{ i18n.t('header.search') }}
+                </div>
+
+                @if (searchService.loading()) {
+                  <div class="px-4 py-4 text-sm text-on-surface-variant">{{ i18n.t('header.search.loading') }}</div>
+                } @else if (searchService.query().trim().length < 2) {
+                  <div class="px-4 py-4 text-sm text-on-surface-variant">{{ i18n.t('header.search.short') }}</div>
+                } @else if (!searchService.results().length) {
+                  <div class="px-4 py-4 text-sm text-on-surface-variant">{{ i18n.t('header.search.empty') }}</div>
+                } @else {
+                  <div class="max-h-[24rem] overflow-y-auto py-2">
+                    @for (result of searchService.results(); track result.kind + ':' + result.id) {
+                      <button
+                        type="button"
+                        class="flex w-full items-start gap-3 px-4 py-3 text-left transition hover:bg-surface-container-low"
+                        (click)="openSearchResult(result)"
+                      >
+                        <span class="material-symbols-outlined mt-0.5 text-on-surface-variant">{{ result.icon }}</span>
+                        <span class="min-w-0 flex-1">
+                          <span class="block text-sm font-semibold text-on-surface">{{ result.title }}</span>
+                          <span class="mt-1 block truncate text-sm text-on-surface-variant">{{ result.subtitle }}</span>
+                        </span>
+                        <span class="rounded-full bg-surface-container-high px-2.5 py-1 text-[0.72rem] font-semibold text-on-surface-variant">
+                          {{ resultKindLabel(result.kind) }}
+                        </span>
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button type="button" class="btn-secondary px-3" (click)="i18n.toggleLanguage()">
+            <span class="material-symbols-outlined"></span>
+            <span class="hidden whitespace-nowrap sm:inline">{{ i18n.currentLabel() }}</span>
+          </button>
+
+          <button type="button" class="btn-secondary px-3" (click)="notificationsToggle.emit()">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="hidden whitespace-nowrap sm:inline">{{ i18n.t('header.alerts') }} </span>
+          </button>
+
+          <button type="button" class="btn-secondary px-3" (click)="themeService.toggleTheme()">
+            <span class="material-symbols-outlined">{{ themeIcon() }}</span>
+            <span class="hidden whitespace-nowrap sm:inline">{{ themeLabel() }}</span>
+          </button>
+
+          <button type="button" class="btn-secondary px-3" (click)="logout()">
+            <span class="material-symbols-outlined"></span>
+            <span class="hidden whitespace-nowrap sm:inline">{{ i18n.t('header.logout') }}</span>
+          </button>
+
+          <div class="hidden rounded-2xl bg-secondary-container/90 px-4 py-2 text-[0.82rem] font-semibold tracking-normal text-on-secondary-container sm:block">
+            {{ userBadge() }}
+          </div>
+        </div>
+      </div>
+    </header>
+  
