@@ -35,15 +35,15 @@ src/
 ## Conventions
 
 - `application/`: facades Signals et orchestration smart component.
-- `domain/`: modèles métier.
-- `infrastructure/`: services API mockés.
+- `domain/`: modeles metier.
+- `infrastructure/`: services API mockes.
 - `presentation/`: pages standalone et composants dumb.
 - `layout/`: shell global responsive.
-- `shared/ui/`: design system réutilisable.
+- `shared/ui/`: design system reutilisable.
 
 ## Design System
 
 - Tokens couleur dans `src/styles.css`
 - mapping Tailwind dans `tailwind.config.js`
-- dark mode piloté par `ThemeService`
-- surfaces tonales, glass layers et boutons gradient alignés avec Stitch
+- dark mode pilote par `ThemeService`
+- surfaces tonales, glass layers et boutons gradient alignes avec Stitch
