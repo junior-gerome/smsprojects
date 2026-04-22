@@ -7,6 +7,7 @@ import com.signalvelocity.smsplatform.shared.application.exception.BusinessExcep
 import com.signalvelocity.smsplatform.users.domain.model.Role;
 import com.signalvelocity.smsplatform.users.domain.model.RoleName;
 import com.signalvelocity.smsplatform.users.domain.model.User;
+import com.signalvelocity.smsplatform.users.domain.model.UserEmailNormalizer;
 import com.signalvelocity.smsplatform.users.domain.repository.RoleRepository;
 import com.signalvelocity.smsplatform.users.domain.repository.UserRepository;
 import com.signalvelocity.smsplatform.users.interfaces.rest.dto.LoginRequest;
@@ -55,7 +56,9 @@ public class AuthApplicationService {
     }
 
     private UserResponse createUser(String fullName, String email, String password, Set<RoleName> requestedRoles) {
-        if (userRepository.existsByEmail(email)) {
+        String normalizedEmail = UserEmailNormalizer.normalize(email);
+
+        if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
             throw new BusinessException("A user with this email already exists");
         }
 
@@ -66,7 +69,7 @@ public class AuthApplicationService {
 
         User user = userRepository.save(User.builder()
                 .fullName(fullName)
-                .email(email)
+                .email(normalizedEmail)
                 .passwordHash(passwordEncoder.encode(password))
                 .enabled(true)
                 .roles(roles)
@@ -76,13 +79,14 @@ public class AuthApplicationService {
     }
 
     public LoginResponse login(LoginRequest request) {
+        String normalizedEmail = UserEmailNormalizer.normalize(request.email());
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+                new UsernamePasswordAuthenticationToken(normalizedEmail, request.password())
         );
 
         AuthenticatedUser authenticatedUser = (AuthenticatedUser) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(authenticatedUser.getUsername(), authenticatedUser.getAuthorities());
-        User user = userRepository.findByEmail(authenticatedUser.getUsername())
+        User user = userRepository.findByEmailIgnoreCase(authenticatedUser.getUsername())
                 .orElseThrow(() -> new BusinessException("Authenticated user not found"));
 
         return new LoginResponse(

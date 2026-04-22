@@ -3,6 +3,7 @@ package com.signalvelocity.smsplatform.users.infrastructure.persistence;
 import com.signalvelocity.smsplatform.users.domain.model.Role;
 import com.signalvelocity.smsplatform.users.domain.model.RoleName;
 import com.signalvelocity.smsplatform.users.domain.model.User;
+import com.signalvelocity.smsplatform.users.domain.model.UserEmailNormalizer;
 import com.signalvelocity.smsplatform.users.domain.repository.RoleRepository;
 import com.signalvelocity.smsplatform.users.domain.repository.UserRepository;
 import java.util.EnumSet;
@@ -47,7 +48,9 @@ public class BootstrapDataInitializer {
                 throw new IllegalStateException("Bootstrap admin is enabled but email/password are not configured");
             }
 
-            if (!userRepository.existsByEmail(bootstrapAdminEmail)) {
+            String normalizedBootstrapAdminEmail = UserEmailNormalizer.normalize(bootstrapAdminEmail);
+
+            if (!userRepository.existsByEmailIgnoreCase(normalizedBootstrapAdminEmail)) {
                 Set<Role> adminRoles = Set.of(
                         roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(),
                         roleRepository.findByName(RoleName.ROLE_MANAGER).orElseThrow()
@@ -55,7 +58,7 @@ public class BootstrapDataInitializer {
 
                 userRepository.save(User.builder()
                         .fullName("Platform Admin")
-                        .email(bootstrapAdminEmail)
+                        .email(normalizedBootstrapAdminEmail)
                         .passwordHash(passwordEncoder.encode(bootstrapAdminPassword))
                         .enabled(true)
                         .roles(adminRoles)

@@ -1,5 +1,6 @@
 package com.signalvelocity.smsplatform.security;
 
+import com.signalvelocity.smsplatform.users.domain.model.UserEmailNormalizer;
 import com.signalvelocity.smsplatform.users.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
+        return userRepository.findByEmailIgnoreCase(UserEmailNormalizer.normalize(username))
                 .map(AuthenticatedUser::from)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
